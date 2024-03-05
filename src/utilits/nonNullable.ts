@@ -4,5 +4,4 @@ function nonNullable<T>(value: T): value is NonNullable<T> {
   }
   return false;
 }
-
 export default nonNullable;
