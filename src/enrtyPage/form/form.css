@@ -1,0 +1,42 @@
+.log-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  width: 30rem;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  border: solid 1px black;
+}
+
+.log-form__userData,
+.log-form__submit {
+  padding: 1rem;
+}
+
+.log-form__userData input[type='text'] {
+  width: 40%;
+  padding: 0.25rem;
+  border-radius: 10px;
+  border: solid 1.5px rgb(203, 200, 200);
+  caret-color: transparent;
+}
+
+.log-form__userData input[type='text']:focus-visible {
+  outline: none;
+  border: solid 1.5px rgb(0, 0, 0);
+}
+
+.log-form__submit {
+  width: 100%;
+}
+
+.log-form__submit input[type='submit'] {
+  cursor: pointer;
+  width: 40%;
+  height: 2rem;
+  font-size: 1.1rem;
+  border: solid 1px black;
+  border-radius: 30px;
+}

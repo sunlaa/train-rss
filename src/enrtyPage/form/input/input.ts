@@ -1,11 +1,17 @@
-import BaseElement from '../../../components/base-element';
+import { BaseElement } from '../../../components/base-element';
 
-export default class Input {
-  input: BaseElement<HTMLInputElement>;
+export default class Input extends BaseElement<HTMLInputElement> {
+  constructor(
+    inputType: string,
+    inputName?: string,
+    minChar?: string,
+    pattern?: string
+  ) {
+    super({ tag: 'input' });
+    if (inputName) this.setAttribute('name', inputName);
+    if (minChar) this.setAttribute('minlength', minChar);
+    if (pattern) this.setAttribute('pattern', pattern);
 
-  constructor(inputType: string, inputName: string) {
-    this.input = new BaseElement({ tag: 'input' });
-    this.input.setAttribute('type', inputType);
-    this.input.setAttribute('name', inputName);
+    this.setAttribute('type', inputType);
   }
 }

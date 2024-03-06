@@ -1,16 +1,38 @@
-type Params<T extends HTMLElement> = Partial<Omit<T, 'tagName'>> & {
-  tag: string;
+import nonNullable from '../utilits/nonNullable';
+
+type Params<T extends HTMLElement = HTMLElement> = Partial<
+  Omit<T, 'tagName'>
+> & {
+  tag: keyof HTMLElementTagNameMap;
   content?: string;
   className?: string;
 };
 
-class BaseElement<T extends HTMLElement> {
+export type ParamsOmitTag = Omit<Params, 'tag'>;
+
+export class BaseElement<T extends HTMLElement = HTMLElement> {
   protected element: T;
 
-  constructor(params: Params<T>) {
+  constructor(
+    params: Params<T>,
+    ...childs: (BaseElement | HTMLElement | null)[]
+  ) {
     const element = document.createElement(params.tag) as T;
     if (params.className) element.classList.add(params.className);
+    if (params.content) element.textContent = params.content;
+    Object.assign(element, params);
     this.element = element;
+    if (childs) {
+      childs.forEach((child) => {
+        if (nonNullable(child)) {
+          this.append(child);
+        }
+      });
+    }
+  }
+
+  setContent(text: string) {
+    this.element.textContent = text;
   }
 
   addClass(className: string) {
@@ -25,7 +47,7 @@ class BaseElement<T extends HTMLElement> {
     return this.element;
   }
 
-  append(child: BaseElement<T> | HTMLElement) {
+  append(child: BaseElement | HTMLElement) {
     if (child instanceof BaseElement) {
       const elem = child.getElement();
       this.element.append(elem);
@@ -46,5 +68,3 @@ class BaseElement<T extends HTMLElement> {
     this.element.setAttribute(attribute, value);
   }
 }
-
-export default BaseElement;

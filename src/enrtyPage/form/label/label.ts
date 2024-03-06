@@ -1,10 +1,11 @@
-import BaseElement from '../../../components/base-element';
+import { BaseElement, ParamsOmitTag } from '../../../components/base-element';
 
-class Label {
-  label: BaseElement<HTMLLabelElement>;
-
-  constructor(labelText: string) {
-    this.label = new BaseElement({ tag: 'label', content: labelText });
+class Label extends BaseElement<HTMLLabelElement> {
+  constructor(
+    params: ParamsOmitTag,
+    ...childs: (BaseElement | HTMLElement | null)[]
+  ) {
+    super({ tag: 'label', ...params }, ...childs);
   }
 }
 
