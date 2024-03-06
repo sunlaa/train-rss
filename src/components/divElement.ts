@@ -8,5 +8,4 @@ class Div extends BaseElement<HTMLDivElement> {
     super({ tag: 'div', ...params }, ...childs);
   }
 }
-
 export default Div;

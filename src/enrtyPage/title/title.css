@@ -1,0 +1,8 @@
+.title {
+  border: solid 1px black;
+  width: 40%;
+  height: 10%;
+  font-size: 5rem;
+  font-weight: 700;
+  text-align: center;
+}
