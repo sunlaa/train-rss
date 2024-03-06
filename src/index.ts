@@ -1,9 +1,6 @@
 import './global.css';
-import Form from './enrtyPage/form/form';
-import Title from './enrtyPage/title/title';
+import EntryPage from './enrtyPage/enrtyPage';
 
-const form = new Form();
-const title = new Title();
+const page = new EntryPage();
 
-document.body.append(title.getElement());
-document.body.append(form.getElement());
+document.body.append(page.getElement());

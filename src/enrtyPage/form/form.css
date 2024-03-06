@@ -4,6 +4,7 @@
   align-items: flex-start;
   justify-content: center;
   gap: 10px;
+  margin: 1rem;
   width: 30rem;
   font-size: 1.1rem;
   border-radius: 30px;
@@ -19,13 +20,13 @@
   width: 40%;
   padding: 0.25rem;
   border-radius: 10px;
-  border: solid 1.5px rgb(203, 200, 200);
+  border: solid 1px rgb(203, 200, 200);
   caret-color: transparent;
 }
 
 .log-form__userData input[type='text']:focus-visible {
   outline: none;
-  border: solid 1.5px rgb(0, 0, 0);
+  border: solid 1px rgb(0, 0, 0);
 }
 
 .log-form__submit {
