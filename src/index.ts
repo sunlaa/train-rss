@@ -1,6 +1,5 @@
-import './global.css';
-import EntryPage from './enrtyPage/enrtyPage';
+import App from './app/app';
 
-const page = new EntryPage();
+const app = new App();
 
-document.body.append(page.getElement());
+app.run();

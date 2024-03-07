@@ -4,7 +4,7 @@ import Div from '../../components/divElement';
 import Input from './input/input';
 import Label from './label/label';
 
-type InputValue = {
+export type InputValue = {
   name: FormDataEntryValue | null;
   surname: FormDataEntryValue | null;
 };

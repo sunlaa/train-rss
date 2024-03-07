@@ -21,7 +21,6 @@
   padding: 0.25rem;
   border-radius: 10px;
   border: solid 1px rgb(203, 200, 200);
-  caret-color: transparent;
 }
 
 .log-form__userData input[type='text']:focus-visible {

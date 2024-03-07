@@ -9,4 +9,4 @@ class EntryPage extends BaseElement {
   }
 }
 
-export default EntryPage   ;
+export default EntryPage;
