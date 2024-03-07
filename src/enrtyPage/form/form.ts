@@ -3,6 +3,7 @@ import { BaseElement } from '../../components/base-element';
 import Div from '../../components/divElement';
 import Input from './input/input';
 import Label from './label/label';
+import Router from '../../helpers/router';
 
 export type InputValue = {
   name: FormDataEntryValue | null;
@@ -12,7 +13,9 @@ export type InputValue = {
 class Form extends BaseElement<HTMLFormElement> {
   inputValues: InputValue;
 
-  constructor() {
+  router: Router;
+
+  constructor(router: Router) {
     const nameInput = new Input('text', 'userName', '3', '^[A-Z][\\-a-zA-z]+$');
     const surnameInput = new Input(
       'text',
@@ -33,23 +36,39 @@ class Form extends BaseElement<HTMLFormElement> {
       new Div({ className: 'log-form__submit' }, new Input('submit'))
     );
 
+    this.router = router;
+
     this.inputValues = {
       name: '',
       surname: '',
     };
 
-    this.element.addEventListener('submit', this.saveValueOfInput);
+    const handler = this.submitHandler.bind(this);
+    this.element.addEventListener('submit', handler);
   }
 
-  private saveValueOfInput = (event: Event) => {
+  private submitHandler(event: Event) {
     event.preventDefault();
+    this.getInputValue();
+    this.saveInputValue();
+    if (this.inputValues.name !== '' && this.inputValues.surname !== '') {
+      this.moveToStartPage();
+    }
+  }
 
+  private getInputValue() {
     const dataForm = new FormData(this.getElement());
     this.inputValues.name = dataForm.get('userName');
     this.inputValues.surname = dataForm.get('userSurname');
+  }
 
+  private saveInputValue() {
     window.localStorage.setItem('logData', JSON.stringify(this.inputValues));
-  };
+  }
+
+  private moveToStartPage() {
+    this.router.navigate('start-page');
+  }
 }
 
 export default Form;
