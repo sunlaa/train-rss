@@ -9,11 +9,10 @@ class Router {
   constructor(routes: Route[]) {
     this.routes = routes;
 
-    const handler = this.navigate.bind(this);
-    window.addEventListener('hashchange', handler);
+    window.addEventListener('hashchange', this.navigate);
   }
 
-  navigate(url: string | HashChangeEvent) {
+  navigate = (url: string | HashChangeEvent) => {
     if (typeof url === 'string') {
       window.location.href = `${window.location.href.replace(/#(.*)$/, '')}#${url}`;
     }
@@ -26,6 +25,6 @@ class Router {
     }
 
     route.callback();
-  }
+  };
 }
 export default Router;

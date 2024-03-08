@@ -3,6 +3,7 @@ import StartPage from '../startPage/startPage';
 import EntryPage from '../enrtyPage/enrtyPage';
 import { BaseElement } from '../components/base-element';
 import Router from '../helpers/router';
+import Game from '../game-page/game-page';
 
 export default class App {
   container: HTMLElement;
@@ -17,7 +18,7 @@ export default class App {
   }
 
   public run() {
-    this.router.navigate('entry-page');
+    this.router.navigate('start-page');
   }
 
   createRoutes() {
@@ -32,6 +33,12 @@ export default class App {
         path: 'start-page',
         callback: () => {
           this.setContent(new StartPage());
+        },
+      },
+      {
+        path: 'game-page',
+        callback: () => {
+          this.setContent(new Game());
         },
       },
     ];
