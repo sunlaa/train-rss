@@ -1,0 +1,34 @@
+.field {
+  border: 10px solid rgb(77, 37, 13);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5px;
+  margin: 100px;
+}
+
+.line {
+  display: flex;
+  gap: 1.2px;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.piece {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: wheat;
+  text-shadow: 2px 2px black;
+  font-size: 1.5rem;
+}
+
+.bulge {
+  z-index: 1000;
+  position: absolute;
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}

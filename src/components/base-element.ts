@@ -4,8 +4,10 @@ type Params<T extends HTMLElement = HTMLElement> = Partial<
   Omit<T, 'tagName'>
 > & {
   tag: keyof HTMLElementTagNameMap;
+  id?: string;
   content?: string;
   className?: string;
+  styles?: Partial<CSSStyleDeclaration>;
 };
 
 export type ParamsOmitTag = Omit<Params, 'tag'>;
@@ -20,6 +22,8 @@ export class BaseElement<T extends HTMLElement = HTMLElement> {
     const element = document.createElement(params.tag) as T;
     if (params.className) element.classList.add(params.className);
     if (params.content) element.textContent = params.content;
+    if (params.id) element.id = params.id;
+    if (params.styles) Object.assign(element.style, params.styles);
     Object.assign(element, params);
     this.element = element;
     if (childs) {
@@ -56,6 +60,12 @@ export class BaseElement<T extends HTMLElement = HTMLElement> {
     }
   }
 
+  appendChildren(children: (BaseElement | HTMLElement | null)[]): void {
+    children.filter(nonNullable).forEach((el) => {
+      this.append(el);
+    });
+  }
+
   remove() {
     this.element.remove();
   }
@@ -66,5 +76,9 @@ export class BaseElement<T extends HTMLElement = HTMLElement> {
 
   setAttribute(attribute: string, value: string) {
     this.element.setAttribute(attribute, value);
+  }
+
+  setStyles(styles: Partial<CSSStyleDeclaration>) {
+    Object.assign(this.element.style, styles);
   }
 }

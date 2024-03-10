@@ -38,13 +38,16 @@ export default class UserSelect {
 
   round: number;
 
-  data: RoundData;
+  roundData: RoundData;
+
+  sentensesData: SentenseData[];
 
   constructor(level: number, round: number) {
     this.level = level;
     this.round = round;
 
-    this.data = this.getData();
+    this.roundData = this.getData();
+    this.sentensesData = this.roundData.words;
   }
 
   private getData(): RoundData {
@@ -53,6 +56,18 @@ export default class UserSelect {
   }
 
   getImgSrc(): string {
-    return this.data.levelData.imageSrc;
+    return this.roundData.levelData.imageSrc;
+  }
+
+  getSentenses(): string[] {
+    return this.sentensesData.map((elem) => elem.textExample);
+  }
+
+  getTranslate(): string[] {
+    return this.sentensesData.map((elem) => elem.textExampleTranslate);
+  }
+
+  getAudioSrc(): string[] {
+    return this.sentensesData.map((elem) => elem.audioExample);
   }
 }
