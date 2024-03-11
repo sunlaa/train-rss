@@ -32,6 +32,7 @@ export default class Slicer {
 
   cutImage() {
     const lines = [];
+
     const rows = this.sentenses.length;
     const piecesMatrix: HTMLElement[][] = Array.from(
       { length: rows },
@@ -42,7 +43,8 @@ export default class Slicer {
       const sentense = this.sentenses[y].split(' ');
       const countPiecesInLine = sentense.length;
 
-      const sentenseStrokeWidth = sentense.reduce((acc, elem) => {
+
+      const sentenseCharCount = sentense.reduce((acc, elem) => {
         const words = acc;
         const res = words + elem.length;
         return res;
@@ -58,8 +60,11 @@ export default class Slicer {
       lines.push(line);
 
       for (let x = 0; x < countPiecesInLine; x += 1) {
-        const fraction = sentense[x].length / sentenseStrokeWidth;
-        const pieceWidth = fraction * this.fieldWidth;
+        const contentWidth = sentense[x].length * 16;
+        const padding =
+          (this.fieldWidth - sentenseCharCount * 16) / countPiecesInLine;
+        const pieceWidth = contentWidth + padding;
+
         const pieceHeight = this.fieldHeight / rows;
 
         const wrapper = new Piece({
@@ -81,6 +86,8 @@ export default class Slicer {
             backgroundPosition: `-${passedWidth}px ${(this.fieldHeight / rows) * -y}px`,
           },
         });
+
+        piece.setStyles({ width: `${pieceWidth}px` });
 
         const topValue = this.fieldHeight / rows / 2 - bulgeSize / 2;
 
