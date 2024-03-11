@@ -43,7 +43,6 @@ export default class Slicer {
       const sentense = this.sentenses[y].split(' ');
       const countPiecesInLine = sentense.length;
 
-
       const sentenseCharCount = sentense.reduce((acc, elem) => {
         const words = acc;
         const res = words + elem.length;
