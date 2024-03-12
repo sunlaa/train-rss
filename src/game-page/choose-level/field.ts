@@ -12,9 +12,15 @@ export default class Field extends Div {
     },
     ...child: (BaseElement | HTMLElement | null)[]
   ) {
-    super({ className: 'field' }, ...child);
-
-    this.element.style.width = `${fieldWidth}px`;
-    this.element.style.height = `${fieldHeight}px`;
+    super(
+      {
+        className: 'field',
+        styles: {
+          width: `${fieldWidth}px`,
+          height: `${fieldHeight}px`,
+        },
+      },
+      ...child
+    );
   }
 }

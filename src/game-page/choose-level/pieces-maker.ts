@@ -3,6 +3,7 @@ import Piece from '../piece/piece';
 import './pieces-maker.css';
 
 const bulgeSize = 20;
+const fontSize = 10;
 
 export default class Slicer {
   fieldWidth: number;
@@ -34,10 +35,7 @@ export default class Slicer {
     const lines = [];
 
     const rows = this.sentenses.length;
-    const piecesMatrix: HTMLElement[][] = Array.from(
-      { length: rows },
-      () => []
-    );
+    const piecesMatrix: Piece[][] = Array.from({ length: rows }, () => []);
 
     for (let y = 0; y < rows; y += 1) {
       const sentense = this.sentenses[y].split(' ');
@@ -56,21 +54,26 @@ export default class Slicer {
         styles: { height: `${this.fieldHeight / rows}px` },
       });
 
+      line.addClass(`line-${y}`);
+
       lines.push(line);
 
       for (let x = 0; x < countPiecesInLine; x += 1) {
-        const contentWidth = sentense[x].length * 16;
+        const contentWidth = sentense[x].length * fontSize;
         const padding =
-          (this.fieldWidth - sentenseCharCount * 16) / countPiecesInLine;
+          (this.fieldWidth - sentenseCharCount * fontSize) / countPiecesInLine;
         const pieceWidth = contentWidth + padding;
 
         const pieceHeight = this.fieldHeight / rows;
 
-        const wrapper = new Piece({
-          className: 'wrapper',
-          id: `${x}`,
-          styles: { zIndex: `${x}` },
-        });
+        const wrapper = new Piece(
+          {
+            className: 'wrapper',
+            id: `${x}`,
+            styles: { zIndex: `${x}` },
+          },
+          y
+        );
 
         const backSize = `${this.fieldWidth}px ${this.fieldHeight}px`;
 
@@ -134,10 +137,10 @@ export default class Slicer {
           }
         }
 
-        line.append(wrapper); // в DOMе вставляем в линии пазлы
+        // line.append(wrapper); // в DOMе вставляем в линии пазлы
         wrapper.append(piece); // в DOMе вставляем состоявляющие в пазлы
 
-        piecesMatrix[y][x] = wrapper.getElement();
+        piecesMatrix[y][x] = wrapper;
       }
     }
 

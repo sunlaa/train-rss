@@ -1,10 +1,7 @@
 import UserSelect from './choose-round';
-import Field from './field';
-import SourceBlock from './source-block';
 import Pic from '../get-pic-size/pic';
-import Slicer from './pieces-maker';
 
-export default class DrawRound {
+export default class DrawGame {
   audioSrc: string[];
 
   imgSrc: string;
@@ -12,6 +9,8 @@ export default class DrawRound {
   sentenses: string[];
 
   translate: string[];
+
+  // sizes: { fieldWidth: number; fieldHeight: number };
 
   constructor(level: number, round: number) {
     const roundData = new UserSelect(level, round);
@@ -30,20 +29,5 @@ export default class DrawRound {
       fieldWidth: sizes.width * scale,
       fieldHeight: sizes.height * scale,
     };
-  }
-
-  async draw(scale: number) {
-    const sizes = await this.getSizes(scale);
-
-    const slicer = new Slicer(sizes, this.imgSrc, this.sentenses);
-    const slicedImg = slicer.cutImage();
-
-    const field = new Field(sizes, ...slicedImg.linesArr);
-    const sources = new SourceBlock(slicedImg.piecesArr, sizes.fieldWidth);
-    // sources.addMouseListeners(field);
-    sources.updatePieces();
-
-    document.body.append(field.getElement());
-    document.body.append(sources.getElement());
   }
 }

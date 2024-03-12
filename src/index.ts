@@ -14,6 +14,6 @@ app.run();
 
 // piece.getSizes().then((val) => [val.height, val.width]);
 
-const round = new DrawRound(2, 10);
+const round = new DrawRound(1, 17);
 
-round.draw(0.8);
+round.draw(1);
