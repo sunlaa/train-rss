@@ -1,14 +1,15 @@
 import './source-block.css';
 import Div from '../../components/divElement';
-import Piece from '../piece/piece';
-// import Field from './field';
+import ListenerHandler from './listener-handler';
 
 const gaps = 100;
 
 export default class SourceBlock extends Div {
-  piecesMatrix: Piece[][];
+  piecesMatrix: Div[][];
 
-  constructor(piecesMatrix: Piece[][], blockWidth: number) {
+  lineArr: Div[];
+
+  constructor(piecesMatrix: Div[][], lineArr: Div[], blockWidth: number) {
     super({
       className: 'source-block',
       styles: {
@@ -16,23 +17,40 @@ export default class SourceBlock extends Div {
       },
     });
 
-    this.addListener('empty', this.updatePieces);
-
+    this.lineArr = lineArr;
     this.piecesMatrix = piecesMatrix;
   }
 
+  addEvents(pices: Div[], lines: Div) {
+    const handlerAdd = new ListenerHandler(pices, lines, this.element);
+    handlerAdd.addListeners();
+  }
+
   random = () => {
-    const currentLine = this.piecesMatrix.shift();
-    if (!currentLine) throw new Error('No pieces!');
-    for (let i = currentLine.length; i > 0; i -= 1) {
+    const currentPieces = this.piecesMatrix.shift();
+    if (!currentPieces) throw new Error('No pieces!');
+    for (let i = currentPieces.length; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      [currentLine[i], currentLine[j]] = [currentLine[j], currentLine[i]];
+      [currentPieces[i], currentPieces[j]] = [
+        currentPieces[j],
+        currentPieces[i],
+      ];
     }
-    return currentLine;
+    return currentPieces;
+  };
+
+  addPieces = () => {
+    const randomPieces = this.random();
+    const currentLine = this.lineArr.shift();
+    if (!currentLine) throw new Error('No lines!');
+
+    this.addEvents(randomPieces, currentLine);
+
+    this.element.innerHTML = '';
+    this.appendChildren(randomPieces);
   };
 
   updatePieces = () => {
-    const randomLine = this.random();
-    this.appendChildren(randomLine);
+    this.addPieces();
   };
 }

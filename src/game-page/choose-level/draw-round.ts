@@ -16,10 +16,10 @@ export default class DrawRound {
   constructor(level: number, round: number) {
     const roundData = new UserSelect(level, round);
 
+    this.translate = roundData.getTranslate();
     this.audioSrc = roundData.getAudioSrc();
     this.imgSrc = roundData.getImgSrc();
     this.sentenses = roundData.getSentenses();
-    this.translate = roundData.getTranslate();
   }
 
   async getSizes(scale: number) {
@@ -39,9 +39,14 @@ export default class DrawRound {
     const slicedImg = slicer.cutImage();
 
     const field = new Field(sizes, ...slicedImg.linesArr);
-    const sources = new SourceBlock(slicedImg.piecesArr, sizes.fieldWidth);
-    // sources.addMouseListeners(field);
-    sources.updatePieces();
+    const sources = new SourceBlock(
+      slicedImg.piecesArr,
+      slicedImg.linesArr,
+      sizes.fieldWidth
+    );
+
+    document.addEventListener('empty', sources.updatePieces);
+    sources.addPieces();
 
     document.body.append(field.getElement());
     document.body.append(sources.getElement());

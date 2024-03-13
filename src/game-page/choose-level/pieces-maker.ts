@@ -1,5 +1,4 @@
 import Div from '../../components/divElement';
-import Piece from '../piece/piece';
 import './pieces-maker.css';
 
 const bulgeSize = 20;
@@ -35,7 +34,7 @@ export default class Slicer {
     const lines = [];
 
     const rows = this.sentenses.length;
-    const piecesMatrix: Piece[][] = Array.from({ length: rows }, () => []);
+    const piecesMatrix: Div[][] = Array.from({ length: rows }, () => []);
 
     for (let y = 0; y < rows; y += 1) {
       const sentense = this.sentenses[y].split(' ');
@@ -66,14 +65,10 @@ export default class Slicer {
 
         const pieceHeight = this.fieldHeight / rows;
 
-        const wrapper = new Piece(
-          {
-            className: 'wrapper',
-            id: `${x}`,
-            styles: { zIndex: `${x}` },
-          },
-          y
-        );
+        const wrapper = new Div({
+          className: 'wrapper',
+          id: `${x}`,
+        });
 
         const backSize = `${this.fieldWidth}px ${this.fieldHeight}px`;
 
@@ -137,7 +132,7 @@ export default class Slicer {
           }
         }
 
-        // line.append(wrapper); // в DOMе вставляем в линии пазлы
+        line.append(wrapper); // в DOMе вставляем в линии пазлы
         wrapper.append(piece); // в DOMе вставляем состоявляющие в пазлы
 
         piecesMatrix[y][x] = wrapper;
