@@ -47,7 +47,7 @@ export default class SourceBlock extends Div {
     this.addEvents(randomPieces, currentLine);
 
     this.element.innerHTML = '';
-    this.appendChildren(randomPieces);
+    this.appendChildren(...randomPieces);
   };
 
   updatePieces = () => {

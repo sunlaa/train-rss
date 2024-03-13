@@ -1,7 +1,7 @@
 import Div from '../../components/divElement';
 import './pieces-maker.css';
 
-const bulgeSize = 20;
+const bulgeSize = 23;
 const fontSize = 10;
 
 export default class Slicer {
@@ -52,8 +52,6 @@ export default class Slicer {
         className: 'line',
         styles: { height: `${this.fieldHeight / rows}px` },
       });
-
-      line.addClass(`line-${y}`);
 
       lines.push(line);
 
@@ -108,7 +106,6 @@ export default class Slicer {
             piece.setStyles({
               mask: `radial-gradient(
               circle at ${pieceWidth}px 50%,
-              transparent 0,
               transparent ${bulgeSize / 2}px,
               black ${bulgeSize / 2}px
             )`,
@@ -123,7 +120,6 @@ export default class Slicer {
             piece.setStyles({
               mask: `radial-gradient(
               circle at ${pieceWidth}px 50%,
-              transparent 0,
               transparent ${bulgeSize / 2}px,
               black ${bulgeSize / 2}px
             )`,
@@ -132,7 +128,7 @@ export default class Slicer {
           }
         }
 
-        line.append(wrapper); // в DOMе вставляем в линии пазлы
+        // line.append(wrapper); // в DOMе вставляем в линии пазлы
         wrapper.append(piece); // в DOMе вставляем состоявляющие в пазлы
 
         piecesMatrix[y][x] = wrapper;

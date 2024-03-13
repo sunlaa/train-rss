@@ -21,6 +21,10 @@ module.exports = {
         loader: 'json5-loader',
         type: 'javascript/auto',
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif|ogg|mp3|wav)$/i,
+        type: 'asset',
+      },
     ],
   },
   resolve: {

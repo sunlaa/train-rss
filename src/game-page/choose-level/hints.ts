@@ -15,18 +15,22 @@ export default class Hint extends BaseElement {
 
     this.translate = new Div({ className: 'translate' });
     this.audio = document.createElement('audio');
+    this.audio.controls = true;
 
     this.translateText = translateText;
     this.audioSrc = audioSrc;
+
+    this.updateData();
+    this.appendChildren(this.translate, this.audio);
   }
 
-  addData() {
+  updateData() {
     const currentTranslate = this.translateText.shift();
     const currentSrc = this.audioSrc.shift();
 
     if (currentTranslate && currentSrc) {
       this.translate.setContent(currentTranslate);
-      this.audio.src = `src/sources/data/${currentSrc}`;
+      this.audio.src = `https://raw.githubusercontent.com/rolling-scopes-school/rss-puzzle-data/main/${currentSrc}`;
     }
   }
 }

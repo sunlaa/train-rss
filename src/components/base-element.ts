@@ -60,7 +60,7 @@ export class BaseElement<T extends HTMLElement = HTMLElement> {
     }
   }
 
-  appendChildren(children: (BaseElement | HTMLElement | null)[]): void {
+  appendChildren(...children: (BaseElement | HTMLElement | null)[]): void {
     children.filter(nonNullable).forEach((elem) => {
       this.append(elem);
     });
