@@ -9,6 +9,8 @@ export default class SourceBlock extends Div {
 
   lineArr: Div[];
 
+  counter: number;
+
   constructor(piecesMatrix: Div[][], lineArr: Div[], blockWidth: number) {
     super({
       className: 'source-block',
@@ -17,6 +19,7 @@ export default class SourceBlock extends Div {
       },
     });
 
+    this.counter = 0;
     this.lineArr = lineArr;
     this.piecesMatrix = piecesMatrix;
   }
@@ -27,8 +30,7 @@ export default class SourceBlock extends Div {
   }
 
   random = () => {
-    const currentPieces = this.piecesMatrix.shift();
-    if (!currentPieces) throw new Error('No pieces!');
+    const currentPieces = this.piecesMatrix[this.counter];
     for (let i = currentPieces.length; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
       [currentPieces[i], currentPieces[j]] = [
@@ -41,13 +43,13 @@ export default class SourceBlock extends Div {
 
   addPieces = () => {
     const randomPieces = this.random();
-    const currentLine = this.lineArr.shift();
-    if (!currentLine) throw new Error('No lines!');
+    const currentLine = this.lineArr[this.counter];
 
     this.addEvents(randomPieces, currentLine);
 
     this.element.innerHTML = '';
     this.appendChildren(...randomPieces);
+    this.counter += 1;
   };
 
   updatePieces = () => {

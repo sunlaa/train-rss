@@ -3,8 +3,9 @@ import Field from './field';
 import SourceBlock from './source-block';
 import Pic from '../get-pic-size/pic';
 import Slicer from './pieces-maker';
-import Hint from './hints';
-// import Switches from './switches';
+import Hint from '../hints-logic/hints-view/hints';
+import Switches from '../hints-logic/switches/switches';
+import { BaseElement } from '../../components/base-element';
 
 export default class DrawRound {
   audioSrc: string[];
@@ -34,7 +35,7 @@ export default class DrawRound {
     };
   }
 
-  async draw(scale: number) {
+  async draw(scale: number, container: BaseElement) {
     const sizes = await this.getSizes(scale);
 
     const slicer = new Slicer(sizes, this.imgSrc, this.sentenses);
@@ -42,7 +43,11 @@ export default class DrawRound {
 
     const hints = new Hint(this.translate, this.audioSrc);
 
-    // const switches = new Switches(hints.translate, hints.audio, this.imgSrc);
+    const switches = new Switches(
+      hints.translateBlock,
+      hints.audioHint,
+      this.imgSrc
+    );
 
     const field = new Field(sizes, ...slicedImg.linesArr);
     const sources = new SourceBlock(
@@ -52,13 +57,11 @@ export default class DrawRound {
     );
 
     document.addEventListener('empty', () => {
-      hints.updateData();
+      hints.updateHintsData();
       sources.updatePieces();
     });
     sources.addPieces();
 
-    document.body.append(hints.getElement());
-    document.body.append(field.getElement());
-    document.body.append(sources.getElement());
+    container.appendChildren(switches, hints, field, sources);
   }
 }

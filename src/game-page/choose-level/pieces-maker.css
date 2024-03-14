@@ -3,7 +3,7 @@
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  gap: 0.5px;
+  gap: 1px;
   margin: 10px;
 }
 
@@ -27,7 +27,7 @@
   box-sizing: border-box;
   color: wheat;
   text-shadow: 1px 1px black;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .bulge {

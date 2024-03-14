@@ -82,8 +82,6 @@ export default class Slicer {
           },
         });
 
-        piece.setStyles({ width: `${pieceWidth}px` });
-
         const topValue = this.fieldHeight / rows / 2 - bulgeSize / 2;
 
         const bulge = new Div({
@@ -132,6 +130,12 @@ export default class Slicer {
         wrapper.append(piece); // в DOMе вставляем состоявляющие в пазлы
 
         piecesMatrix[y][x] = wrapper;
+
+        // piece.setStyles({ backgroundImage: '' });
+        // piece.setStyles({ backgroundColor: 'red' });
+
+        // bulge.setStyles({ backgroundImage: '' });
+        // bulge.setStyles({ backgroundColor: 'red' });
       }
     }
 

@@ -1,0 +1,26 @@
+.switches {
+  align-self: flex-end;
+  display: flex;
+  gap: 10px;
+}
+
+.switch {
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  width: 80px;
+  height: 80px;
+  background-color: teal;
+}
+
+.disabled {
+  background-color: gray;
+}
+
+.audio-hint {
+  background-color: brown;
+}
+
+.translate-hint {
+  background-color: teal;
+}
