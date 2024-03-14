@@ -16,7 +16,7 @@ export default class Hint extends BaseElement {
   count: number;
 
   constructor(translateText: string[], audioSrc: string[]) {
-    super({ tag: 'section', className: 'hint' });
+    super({ tag: 'section', className: 'hints' });
 
     this.translateBlock = new Translate(translateText[0]);
     this.audioHint = new Audio(
@@ -27,6 +27,7 @@ export default class Hint extends BaseElement {
 
     this.translateText = translateText;
     this.audioSrc = audioSrc;
+    this.appendChildren(this.translateBlock, this.audioHint.getElement());
   }
 
   updateHintsData() {

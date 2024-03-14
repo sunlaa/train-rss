@@ -1,3 +1,5 @@
+import './draw-round.css';
+
 import UserSelect from './choose-round';
 import Field from './field';
 import SourceBlock from './source-block';
@@ -6,8 +8,9 @@ import Slicer from './pieces-maker';
 import Hint from '../hints-logic/hints-view/hints';
 import Switches from '../hints-logic/switches/switches';
 import { BaseElement } from '../../components/base-element';
+import IDKButton from '../end-of-game/idk-button/idk-button';
 
-export default class DrawRound {
+export default class DrawRound extends BaseElement {
   audioSrc: string[];
 
   imgSrc: string;
@@ -17,15 +20,18 @@ export default class DrawRound {
   translate: string[];
 
   constructor(level: number, round: number) {
+    super({ tag: 'section', className: 'user-interact-field' });
     const roundData = new UserSelect(level, round);
 
     this.translate = roundData.getTranslate();
     this.audioSrc = roundData.getAudioSrc();
     this.imgSrc = roundData.getImgSrc();
     this.sentenses = roundData.getSentenses();
+
+    this.draw(0.5);
   }
 
-  async getSizes(scale: number) {
+  private async getSizes(scale: number) {
     const picture = new Pic(this.imgSrc);
     const sizes = await picture.getSizes();
     this.imgSrc = picture.src;
@@ -35,7 +41,7 @@ export default class DrawRound {
     };
   }
 
-  async draw(scale: number, container: BaseElement) {
+  async draw(scale: number) {
     const sizes = await this.getSizes(scale);
 
     const slicer = new Slicer(sizes, this.imgSrc, this.sentenses);
@@ -56,12 +62,18 @@ export default class DrawRound {
       sizes.fieldWidth
     );
 
-    document.addEventListener('empty', () => {
+    const idkButton = new IDKButton(
+      slicedImg.piecesArr,
+      slicedImg.linesArr,
+      sources
+    );
+
+    this.addListener('empty', () => {
       hints.updateHintsData();
       sources.updatePieces();
     });
     sources.addPieces();
 
-    container.appendChildren(switches, hints, field, sources);
+    this.appendChildren(switches, hints, field, sources, idkButton);
   }
 }

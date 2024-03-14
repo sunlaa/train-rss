@@ -5,11 +5,17 @@
 }
 
 .switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-size: 10px;
   cursor: pointer;
-  text-align: center;
   color: white;
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  padding: 0.3rem;
+  border-radius: 30px;
+  height: 30px;
   background-color: teal;
 }
 

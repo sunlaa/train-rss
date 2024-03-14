@@ -5,7 +5,7 @@ import data4 from '../../sources/data/wordCollectionLevel4.json';
 import data5 from '../../sources/data/wordCollectionLevel5.json';
 import data6 from '../../sources/data/wordCollectionLevel6.json';
 
-const data: Json[] = [data1, data2, data3, data4, data5, data6];
+export const data: Json[] = [data1, data2, data3, data4, data5, data6];
 
 type SentenseData = {
   audioExample: string;

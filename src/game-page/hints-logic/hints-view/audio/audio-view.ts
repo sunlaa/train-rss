@@ -1,11 +1,31 @@
-export default class Audio extends HTMLAudioElement {
+import LocalStorage from '../../../../helpers/localStorage';
+
+export default class Audio {
+  element: HTMLAudioElement;
+
   constructor(audioSrc: string) {
-    super();
-    this.src = audioSrc;
-    this.controls = true;
+    this.element = document.createElement('audio');
+    this.element.src = audioSrc;
+    this.element.controls = true;
+
+    if (LocalStorage.get('hints-data')?.audio === 'false') {
+      this.setStyles({ opacity: '0' });
+    }
+  }
+
+  play() {
+    this.element.play();
   }
 
   updateSrc(newSrc: string) {
-    this.src = newSrc;
+    this.element.src = newSrc;
+  }
+
+  getElement() {
+    return this.element;
+  }
+
+  setStyles(styles: Partial<CSSStyleDeclaration>) {
+    Object.assign(this.element.style, styles);
   }
 }

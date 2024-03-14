@@ -1,4 +1,5 @@
 import Div from '../../../../components/divElement';
+import LocalStorage from '../../../../helpers/localStorage';
 
 export default class Translate extends Div {
   translate: string;
@@ -7,6 +8,9 @@ export default class Translate extends Div {
     super({ className: 'translate-block', content: translate });
 
     this.translate = translate;
+    if (LocalStorage.get('hints-data')?.translate === 'false') {
+      this.setStyles({ opacity: '0' });
+    }
   }
 
   updateTranslate(newTranslate: string) {

@@ -4,10 +4,11 @@ import Div from '../../components/divElement';
 import Input from './input/input';
 import Label from './label/label';
 import Router from '../../helpers/router';
+import LocalStorage from '../../helpers/localStorage';
 
 export type InputValue = {
-  name: FormDataEntryValue | null;
-  surname: FormDataEntryValue | null;
+  name: string;
+  surname: string;
 };
 
 class Form extends BaseElement<HTMLFormElement> {
@@ -58,12 +59,12 @@ class Form extends BaseElement<HTMLFormElement> {
 
   private getInputValue() {
     const dataForm = new FormData(this.getElement());
-    this.inputValues.name = dataForm.get('userName');
-    this.inputValues.surname = dataForm.get('userSurname');
+    this.inputValues.name = `${dataForm.get('user-name')}`;
+    this.inputValues.surname = `${dataForm.get('userSurname')}`;
   }
 
   private saveInputValue() {
-    window.localStorage.setItem('logData', JSON.stringify(this.inputValues));
+    LocalStorage.save('logData', this.inputValues);
   }
 
   private moveToStartPage() {

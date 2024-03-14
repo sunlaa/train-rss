@@ -5,7 +5,7 @@ type LocalData = {
 };
 
 export default class LocalStorage {
-  static save(key: string, data: string) {
+  static save(key: string, data: LocalData) {
     const JSONdata = JSON.stringify(data);
     window.localStorage.setItem(key, JSONdata);
   }

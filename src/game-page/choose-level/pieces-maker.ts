@@ -1,7 +1,7 @@
 import Div from '../../components/divElement';
 import './pieces-maker.css';
 
-const bulgeSize = 23;
+const bulgeSize = 20;
 const fontSize = 10;
 
 export default class Slicer {

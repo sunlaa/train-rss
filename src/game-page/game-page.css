@@ -5,3 +5,11 @@
   align-items: center;
   width: 100%;
 }
+
+.selection-block {
+  order: 1;
+}
+
+.user-interact-field {
+  order: 2;
+}
