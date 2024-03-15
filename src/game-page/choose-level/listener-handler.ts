@@ -75,7 +75,6 @@ export default class ListenerHandler {
   private lastDrop = () => {
     const picesInSources = this.sourceBlock.querySelectorAll('.wrapper');
     if (picesInSources.length === 0) {
-      this.removeListeners();
       this.sourceBlock.dispatchEvent(new Event('empty', { bubbles: true })); // Будет дргое событие!
     }
   };
@@ -97,15 +96,16 @@ export default class ListenerHandler {
   }
 
   removeListeners() {
-    this.currentPieces.forEach((piece) => {
-      if (piece) {
-        const puzzle = piece.getElement();
-        puzzle.draggable = false;
-        piece.removeListener('click', this.click);
-        piece.removeListener('dragstart', this.dragstart);
-        piece.removeListener('dragend', this.dragend);
-      }
-    });
+    // this.currentPieces.forEach((piece) => {
+    //   if (piece) {
+    //     const puzzle = piece.getElement();
+    //     puzzle.draggable = false;
+    //     piece.removeListener('click', this.click);
+    //     piece.removeListener('dragstart', this.dragstart);
+    //     piece.removeListener('dragend', this.dragend);
+    //   }
+    // });
+    this.currentLine.style.pointerEvents = 'none';
 
     this.sourceBlock.removeEventListener('dragover', this.dropOnSource);
 

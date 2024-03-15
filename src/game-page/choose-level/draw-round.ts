@@ -8,6 +8,7 @@ import Slicer from './pieces-maker';
 import Hint from '../hints-logic/hints-view/hints';
 import Switches from '../hints-logic/switches/switches';
 import { BaseElement } from '../../components/base-element';
+import IDKButton from '../end-of-game/idk-button/idk-button';
 
 export default class DrawRound extends BaseElement {
   audioSrc: string[];
@@ -61,12 +62,18 @@ export default class DrawRound extends BaseElement {
       sizes.fieldWidth
     );
 
+    const idkButton = new IDKButton(
+      slicedImg.piecesArr,
+      slicedImg.linesArr,
+      sources
+    );
+
     this.addListener('empty', () => {
       hints.updateHintsData();
       sources.updatePieces();
+      idkButton.updateListener();
     });
-    sources.addPieces();
 
-    this.appendChildren(switches, hints, field, sources);
+    this.appendChildren(switches, hints, field, sources, idkButton);
   }
 }
