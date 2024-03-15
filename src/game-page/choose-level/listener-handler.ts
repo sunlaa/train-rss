@@ -72,10 +72,17 @@ export default class ListenerHandler {
     this.currentDraggble = null;
   }
 
-  private lastDrop = () => {
-    const picesInSources = this.sourceBlock.querySelectorAll('.wrapper');
+  private checkSourceBlock = () => {
+    const picesInSources = [...this.sourceBlock.querySelectorAll('.wrapper')];
+    const checkButton = document.querySelector<HTMLElement>('.check-button');
+    if (!checkButton) throw new Error('No check-button!');
+
     if (picesInSources.length === 0) {
-      this.sourceBlock.dispatchEvent(new Event('empty', { bubbles: true })); // Будет дргое событие!
+      checkButton.classList.remove('disabled');
+
+      checkButton.dispatchEvent(new Event('check'));
+    } else {
+      checkButton.classList.add('disabled');
     }
   };
 
@@ -96,15 +103,6 @@ export default class ListenerHandler {
   }
 
   removeListeners() {
-    // this.currentPieces.forEach((piece) => {
-    //   if (piece) {
-    //     const puzzle = piece.getElement();
-    //     puzzle.draggable = false;
-    //     piece.removeListener('click', this.click);
-    //     piece.removeListener('dragstart', this.dragstart);
-    //     piece.removeListener('dragend', this.dragend);
-    //   }
-    // });
     this.currentLine.style.pointerEvents = 'none';
 
     this.sourceBlock.removeEventListener('dragover', this.dropOnSource);
@@ -121,7 +119,7 @@ export default class ListenerHandler {
 
   private dragend = () => {
     if (this.currentDraggble) this.currentDraggble.classList.remove('dragging');
-    this.lastDrop();
+    this.checkSourceBlock();
   };
 
   private dropOnLine = (event: MouseEvent) => {
@@ -177,6 +175,6 @@ export default class ListenerHandler {
       dropOnEmptyPlace(this.sourceBlock, clickedPiece);
     }
 
-    this.lastDrop();
+    this.checkSourceBlock();
   };
 }

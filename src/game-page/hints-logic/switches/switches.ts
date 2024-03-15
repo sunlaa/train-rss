@@ -23,7 +23,7 @@ export default class Switches extends BaseElement {
       LocalStorage.save('hints-data', {
         translate: 'true',
         audio: 'true',
-        image: 'true',
+        image: 'false',
       });
     }
 

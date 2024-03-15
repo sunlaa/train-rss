@@ -1,6 +1,7 @@
 import './idk-button.css';
 import Div from '../../../components/divElement';
 import SourceBlock from '../../choose-level/source-block';
+import CheckButton from '../check-continue/check/check-button';
 
 export default class IDKButton extends Div {
   pieces: Div[][];
@@ -13,9 +14,16 @@ export default class IDKButton extends Div {
 
   sourceBlock: SourceBlock;
 
+  checkButton: CheckButton;
+
   count: number;
 
-  constructor(pieces: Div[][], lines: Div[], sourceBlock: SourceBlock) {
+  constructor(
+    pieces: Div[][],
+    lines: Div[],
+    sourceBlock: SourceBlock,
+    checkButton: CheckButton
+  ) {
     super({ className: 'idk-button', content: "I don't know" });
 
     this.pieces = pieces;
@@ -23,6 +31,7 @@ export default class IDKButton extends Div {
 
     this.count = 0;
 
+    this.checkButton = checkButton;
     this.sourceBlock = sourceBlock;
     this.currentPieces = this.pieces[this.count];
     this.currentLine = this.lines[this.count];
@@ -31,21 +40,27 @@ export default class IDKButton extends Div {
   }
 
   fillLine = () => {
-    this.sourceBlock.getElement().innerHTML = '';
+    this.checkButton.addClass('disabled');
 
     this.currentPieces.sort((a, b) => +a.getElement().id - +b.getElement().id);
 
     this.currentLine.appendChildren(...this.currentPieces);
-    this.sourceBlock.updatePieces();
 
-    this.updateListener();
+    if (this.count === 9) {
+      this.checkButton.transformToContinue();
+      this.checkButton.removeClass('disabled');
+      this.removeListener('click', this.fillLine);
+      return;
+    }
+
+    this.sourceBlock
+      .getElement()
+      .dispatchEvent(new Event('empty', { bubbles: true }));
   };
 
   updateListener = () => {
     this.count += 1;
     this.currentPieces = this.pieces[this.count];
     this.currentLine = this.lines[this.count];
-
-    this.addListener('click', this.fillLine);
   };
 }

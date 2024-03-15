@@ -9,6 +9,9 @@ import Hint from '../hints-logic/hints-view/hints';
 import Switches from '../hints-logic/switches/switches';
 import { BaseElement } from '../../components/base-element';
 import IDKButton from '../end-of-game/idk-button/idk-button';
+import CheckButton from '../end-of-game/check-continue/check/check-button';
+import Statistics from '../end-of-game/statistic-button/statistic-modal/statistic-modal';
+import CheckContinue from '../end-of-game/check-continue/check-continue';
 
 export default class DrawRound extends BaseElement {
   audioSrc: string[];
@@ -19,8 +22,13 @@ export default class DrawRound extends BaseElement {
 
   translate: string[];
 
+  level: number;
+
+  round: number;
+
   constructor(level: number, round: number) {
     super({ tag: 'section', className: 'user-interact-field' });
+
     const roundData = new UserSelect(level, round);
 
     this.translate = roundData.getTranslate();
@@ -28,7 +36,10 @@ export default class DrawRound extends BaseElement {
     this.imgSrc = roundData.getImgSrc();
     this.sentenses = roundData.getSentenses();
 
-    this.draw(0.5);
+    this.level = level;
+    this.round = round;
+
+    this.draw(0.6);
   }
 
   private async getSizes(scale: number) {
@@ -62,18 +73,39 @@ export default class DrawRound extends BaseElement {
       sizes.fieldWidth
     );
 
+    const checkButton = new CheckButton(
+      slicedImg.linesArr,
+      this.level,
+      this.round
+    );
+
+    const checkContinue = new CheckContinue(checkButton);
+
     const idkButton = new IDKButton(
       slicedImg.piecesArr,
       slicedImg.linesArr,
-      sources
+      sources,
+      checkButton
     );
+
+    const statistics = new Statistics();
 
     this.addListener('empty', () => {
       hints.updateHintsData();
       sources.updatePieces();
       idkButton.updateListener();
+      checkButton.updateCounter();
+      checkContinue.transformToCheck();
     });
 
-    this.appendChildren(switches, hints, field, sources, idkButton);
+    this.appendChildren(
+      switches,
+      hints,
+      field,
+      sources,
+      idkButton,
+      checkContinue,
+      statistics
+    );
   }
 }

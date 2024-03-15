@@ -28,6 +28,7 @@
   color: rgb(255, 255, 255);
   text-shadow: 1px 1px 10px black;
   font-size: 15px;
+  transition: all 200ms linear;
 }
 
 .bulge {
