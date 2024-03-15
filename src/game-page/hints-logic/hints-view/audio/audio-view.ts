@@ -13,12 +13,12 @@ export default class Audio {
     }
   }
 
-  play() {
-    this.element.play();
-  }
-
   updateSrc(newSrc: string) {
     this.element.src = newSrc;
+  }
+
+  play() {
+    this.element.play();
   }
 
   getElement() {
